@@ -2,6 +2,7 @@ package com.matthewperiut.hotkettles.item;
 
 import com.matthewperiut.hotkettles.blockentity.KettleBlockEntity;
 import net.minecraft.block.Block;
+import net.minecraft.component.ComponentMap;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
@@ -26,8 +27,8 @@ public class KettleItem extends BlockItem {
     public ActionResult place(ItemPlacementContext context) {
         ActionResult result = super.place(context);
         if (result == ActionResult.SUCCESS) {
-            if (context.getStack().contains(LIQUID_LEVEL_COMPONENT.get())) {
-                int liquidLevel = context.getStack().get(LIQUID_LEVEL_COMPONENT.get());
+            int liquidLevel = context.getStack().getComponents().getOrDefault(LIQUID_LEVEL_COMPONENT.get(), -1);
+            if (liquidLevel != -1) {
                 ((KettleBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos())).setLiquidLevel(liquidLevel);
             } else {
                 if (context.getWorld().getBlockState(context.getBlockPos()).get(KETTLE_TYPE) == 0) {
@@ -43,10 +44,10 @@ public class KettleItem extends BlockItem {
 
     @Override
     public int getItemBarStep(ItemStack stack) {
-        if (stack.contains(LIQUID_LEVEL_COMPONENT.get())) {
-            int liquidLevel = stack.get(LIQUID_LEVEL_COMPONENT.get());
-            int result = (int) (liquidLevel * 2.6f);
-            return result;
+        ComponentMap components = stack.getComponents();
+        int liquidLevel = components.getOrDefault(LIQUID_LEVEL_COMPONENT.get(), 0);
+        if (liquidLevel != 0) {
+            return (int) (liquidLevel * 2.6f);
         }
         return 13;
     }
@@ -58,10 +59,8 @@ public class KettleItem extends BlockItem {
 
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
-        if (stack.contains(LIQUID_LEVEL_COMPONENT.get())) {
-            int liquidLevel = stack.get(LIQUID_LEVEL_COMPONENT.get());
-            return liquidLevel != 5;
-        }
-        return false;
+        ComponentMap components = stack.getComponents();
+        int liquidLevel = components.getOrDefault(LIQUID_LEVEL_COMPONENT.get(), 0);
+        return liquidLevel != 5;
     }
 }

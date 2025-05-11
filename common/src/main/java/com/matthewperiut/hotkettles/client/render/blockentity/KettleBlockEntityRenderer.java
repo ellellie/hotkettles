@@ -1,7 +1,6 @@
 package com.matthewperiut.hotkettles.client.render.blockentity;
 
 import com.matthewperiut.hotkettles.blockentity.KettleBlockEntity;
-import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -9,6 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -50,7 +50,7 @@ public class KettleBlockEntityRenderer implements BlockEntityRenderer<KettleBloc
     private static final float Z_FIGHT_OFFSET = 0.001F;
 
     @Override
-    public void render(KettleBlockEntity kettle, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(KettleBlockEntity kettle, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
         matrices.push();
 
         // Translate to the block's position

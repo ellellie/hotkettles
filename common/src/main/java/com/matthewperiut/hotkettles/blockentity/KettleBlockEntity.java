@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -133,8 +132,8 @@ public class KettleBlockEntity extends BlockEntity {
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
-        this.liquidLevel = nbt.getInt("LiquidLevel");
-        this.liquidHorizontalOffset = nbt.getInt("LiquidHorizontalOffset");
+        this.liquidLevel = nbt.getInt("LiquidLevel").orElse(0);
+        this.liquidHorizontalOffset = nbt.getInt("LiquidHorizontalOffset").orElse(0);
     }
 
     @Override

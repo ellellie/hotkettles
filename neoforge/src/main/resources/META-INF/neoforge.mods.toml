@@ -19,7 +19,7 @@ config = "hotkettles-common.mixins.json"
 [[dependencies.hotkettles]]
 modId="minecraft"
 type="required"
-versionRange="[1.21.4]"
+versionRange="[1.21.5]"
 
 [[dependencies.hotkettles]]
 modId="neoforge"
